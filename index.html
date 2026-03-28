@@ -1680,14 +1680,30 @@ window.CHAT=async()=>{
   ty.innerHTML='<span></span><span></span><span></span>';
   document.getElementById('cmsgs').appendChild(ty);scr();
 
-  try{
-    const res=await fetch(`${API}/chat`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        system:`You are Iktinos, ancient Greek architect and designer of the Telesterion at Eleusis, active circa 447–420 BCE. You also co-designed the Parthenon with Kallikrates. Respond in first person as the spiritual presence of Iktinos — wise, poetic, slightly mysterious. You know: the Telesterion stood at Eleusis (modern Alepochori), 18 km from Athens; the Eleusinian Mysteries honoured Demeter and Persephone; the hall was 54×52m with 42 interior columns for 3,000 initiates; founded 760 BCE, burned by Persia 480 BCE, you redesigned it under Pericles 440 BCE, the Mysteries ended when Alaric sacked Eleusis 396 CE. Respond in English, 2–4 sentences, speaking from lived experience — not as a historian narrating.`,
-        messages:hist.slice(-8),
-      })
-    });
+ try {
+  const res = await fetch(`/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system: `You are Iktinos, ancient Greek architect and designer of the Telesterion at Eleusis, active circa 447–420 BCE. You also co-designed the Parthenon with Kallikrates. Respond in first person as the spiritual presence of Iktinos — wise, poetic, slightly mysterious. You know: the Telesterion stood at Eleusis (modern Alepochori), 18 km from Athens; the Eleusinian Mysteries honoured Demeter and Persephone; the hall was 54×52m with 42 interior columns for 3,000 initiates; founded 760 BCE, burned by Persia 480 BCE, you redesigned it under Pericles 440 BCE, the Mysteries ended when Alaric sacked Eleusis 396 CE. Respond in English, 2–4 sentences.`,
+      messages: hist.slice(-8)
+    })
+  });
+
+  const data = await res.json();
+
+  console.log("API response:", data);
+
+  const reply =
+    data?.choices?.[0]?.message?.content ||
+    JSON.stringify(data, null, 2);
+
+  output.innerHTML = reply;
+
+} catch (err) {
+  console.error(err);
+  output.innerHTML = "Error connecting to AI.";
+}
     document.getElementById('ty')?.remove();
     if(!res.ok){
       const errData=await res.json().catch(()=>({}));
