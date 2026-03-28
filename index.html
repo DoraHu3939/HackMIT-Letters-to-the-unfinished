@@ -1711,9 +1711,9 @@ window.CHAT=async()=>{
       addMsg(`[Error ${res.status}] ${errMsg}`,'a');
       return;
     }
-    const data=await res.json();
-    const reply=data.content?.[0]?.text||data.error||'(empty reply)';
-    addMsg(reply,'a');
+    const data = await res.json();
+const reply = data?.content?.[0]?.text || (data?.error ? JSON.stringify(data.error) : '') || '(empty reply)';
+addMsg(reply, 'a');
     hist.push({role:'assistant',content:reply});
   }catch(e){
     document.getElementById('ty')?.remove();
