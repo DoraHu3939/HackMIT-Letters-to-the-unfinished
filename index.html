@@ -843,7 +843,7 @@ body{font-family:'Noto Serif SC','Cormorant Garamond',serif;color:var(--stone3);
         <!-- label -->
         <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);font-family:'IM Fell English',serif;font-style:italic;font-size:10px;letter-spacing:.4em;color:rgba(184,148,63,.55);text-transform:uppercase;white-space:nowrap;z-index:2;">Floor Plan · Eleusis Sanctuary</div>
         <!-- plan image — white lines glow on dark -->
-        <img src="public/plan.png" alt="Floor Plan" style="position:relative;z-index:1;max-width:85%;max-height:85%;object-fit:contain;filter:brightness(1.1) contrast(1.05);mix-blend-mode:lighten;">
+        <img src="public.plan.png" alt="Floor Plan" style="position:relative;z-index:1;max-width:85%;max-height:85%;object-fit:contain;filter:brightness(1.1) contrast(1.05);mix-blend-mode:lighten;">
       </div>
     </div>
   </div>
@@ -1417,7 +1417,7 @@ function initMdl(){
   mdlGnd.rotation.x=-Math.PI/2;mdlGnd.receiveShadow=true;mdlScene.add(mdlGnd);
 
   // Load model.glb (restored) by default
-  loadGLB('public/model.glb', false, 'restored');
+  loadGLB('public.model.glb', false, 'restored');
 
   new ResizeObserver(()=>{
     const mnt=document.getElementById('mdl-mount');if(!mnt||!mdlRen)return;
@@ -1572,7 +1572,7 @@ window.swM=n=>{
     if(mdlAct!=='plan'){ const from=mdlG[mdlAct]; if(from) from.visible=false; }
     const to=mdlG[n];
     if(to){ to.visible=true; mdlScene.add(to); }
-    else { loadGLB(n==='restored'?'/model.glb':'public/ruins.glb',false,n); return; }
+    else { loadGLB(n==='restored'?'/model.glb':'public.ruins.glb',false,n); return; }
     if(mdlGnd) mdlGnd.visible=true;
   }
   mdlAct=n;
